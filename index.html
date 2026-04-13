@@ -1,855 +1,325 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Impro AI – Eficiencia medida en Retorno</title>
-  <meta name="description"
-    content="Impro AI: agencia de Inteligencia Artificial que elimina tareas manuales y convierte datos en decisiones rentables para empresas mexicanas." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            obsidian: '#0B0D17',
-            cobalt: '#2E5BFF',
-            cobaltDark: '#1a3fd4',
-            cobaltLight: '#5a7fff',
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          },
-          animation: {
-            'float': 'float 6s ease-in-out infinite',
-            'pulse-slow': 'pulse 4s ease-in-out infinite',
-            'glow': 'glow 2s ease-in-out infinite alternate',
-          },
-          keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-20px)' },
-            },
-            glow: {
-              'from': { boxShadow: '0 0 20px #2E5BFF44' },
-              'to': { boxShadow: '0 0 40px #2E5BFFaa, 0 0 80px #2E5BFF44' },
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-    rel="stylesheet" />
-  <style>
-    * {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background-color: #0B0D17;
-      font-family: 'Inter', sans-serif;
-    }
-
-    /* Glassmorphism */
-    .glass {
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(46, 91, 255, 0.25);
-    }
-
-    .glass-hover {
-      transition: all 0.35s ease;
-    }
-
-    .glass-hover:hover {
-      background: rgba(46, 91, 255, 0.10);
-      border-color: rgba(46, 91, 255, 0.6);
-      box-shadow: 0 0 40px rgba(46, 91, 255, 0.25), 0 8px 32px rgba(0, 0, 0, 0.4);
-      transform: translateY(-6px);
-    }
-
-    /* Grid lines decorative bg */
-    .grid-bg {
-      background-image:
-        linear-gradient(rgba(46, 91, 255, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(46, 91, 255, 0.06) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-
-    /* Gradient text */
-    .grad-text {
-      background: linear-gradient(135deg, #ffffff 0%, #a0b4ff 50%, #2E5BFF 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Glow button */
-    .btn-glow {
-      background: #2E5BFF;
-      box-shadow: 0 0 20px rgba(46, 91, 255, 0.4);
-      transition: all 0.3s ease;
-    }
-
-    .btn-glow:hover {
-      background: #1a3fd4;
-      box-shadow: 0 0 40px rgba(46, 91, 255, 0.7), 0 0 80px rgba(46, 91, 255, 0.3);
-      transform: translateY(-2px);
-    }
-
-    /* Outline button */
-    .btn-outline {
-      border: 1px solid rgba(46, 91, 255, 0.6);
-      color: #fff;
-      transition: all 0.3s ease;
-    }
-
-    .btn-outline:hover {
-      background: rgba(46, 91, 255, 0.15);
-      border-color: #2E5BFF;
-      box-shadow: 0 0 20px rgba(46, 91, 255, 0.3);
-      transform: translateY(-2px);
-    }
-
-    /* Fade-in animations */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .fade-up-d1 {
-      transition-delay: 0.1s;
-    }
-
-    .fade-up-d2 {
-      transition-delay: 0.2s;
-    }
-
-    .fade-up-d3 {
-      transition-delay: 0.3s;
-    }
-
-    .fade-up-d4 {
-      transition-delay: 0.4s;
-    }
-
-    .fade-up-d5 {
-      transition-delay: 0.5s;
-    }
-
-    /* Orb decorations */
-    .orb {
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.18;
-      position: absolute;
-      pointer-events: none;
-    }
-
-    /* Nav */
-    nav {
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    /* Mobile menu */
-    #mobile-menu {
-      display: none;
-    }
-
-    #mobile-menu.open {
-      display: flex;
-    }
-
-    /* Input */
-    .form-input {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(46, 91, 255, 0.3);
-      color: #fff;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: #2E5BFF;
-      box-shadow: 0 0 15px rgba(46, 91, 255, 0.25);
-    }
-
-    .form-input::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
-
-    /* Section divider line */
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(46, 91, 255, 0.4), transparent);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impro AI | Agentes de Inteligencia Artificial Avanzados</title>
+    <meta name="description" content="Impro AI: Agencia tecnológica mexicana especializada en Agentes de Inteligencia Artificial Empresariales.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/main.css">
+    <meta name="theme-color" content="#0a192f">
 </head>
-
-<body class="text-white overflow-x-hidden">
-
-  <!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-obsidian/80 border-b border-cobalt/10">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <!-- Logo -->
-      <a href="#" class="flex items-center gap-2 group">
-        <div class="w-8 h-8 rounded-lg btn-glow flex items-center justify-center text-white font-black text-sm">I</div>
-        <span class="font-bold text-xl tracking-tight">Impro <span class="text-cobalt">AI</span></span>
-      </a>
-
-      <!-- Desktop links -->
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#servicios" class="text-white/70 hover:text-white text-sm font-medium transition-colors">Servicios</a>
-        <a href="#proceso" class="text-white/70 hover:text-white text-sm font-medium transition-colors">Proceso de
-          Evaluación</a>
-        <a href="#blog" class="text-white/70 hover:text-white text-sm font-medium transition-colors">Blog</a>
-        <a href="#contacto" class="px-5 py-2 rounded-lg btn-glow text-white font-semibold text-sm">Portal Clientes</a>
-      </div>
-
-      <!-- Mobile hamburger -->
-      <button id="hamburger" class="md:hidden flex flex-col gap-1.5 p-2" onclick="toggleMenu()">
-        <span class="w-6 h-0.5 bg-white rounded transition-all" id="h1"></span>
-        <span class="w-6 h-0.5 bg-white rounded transition-all" id="h2"></span>
-        <span class="w-6 h-0.5 bg-white rounded transition-all" id="h3"></span>
-      </button>
-    </div>
-
-    <!-- Mobile menu -->
-    <div id="mobile-menu" class="md:hidden flex-col px-6 pb-6 gap-4 border-t border-cobalt/10">
-      <a href="#servicios" class="block text-white/70 hover:text-white text-sm font-medium py-2">Servicios</a>
-      <a href="#proceso" class="block text-white/70 hover:text-white text-sm font-medium py-2">Proceso de Evaluación</a>
-      <a href="#blog" class="block text-white/70 hover:text-white text-sm font-medium py-2">Blog</a>
-      <a href="#contacto"
-        class="block text-center px-5 py-2 rounded-lg btn-glow text-white font-semibold text-sm mt-2">Portal
-        Clientes</a>
-    </div>
-  </nav>
-
-  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
-  <section class="relative min-h-screen flex items-center justify-center grid-bg overflow-hidden">
-    <!-- Background image -->
-    <div class="absolute inset-0 z-0">
-      <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1920&q=80&auto=format&fit=crop"
-        alt="Servidores azules abstractos" class="w-full h-full object-cover opacity-15" />
-      <div class="absolute inset-0 bg-gradient-to-b from-obsidian/60 via-obsidian/40 to-obsidian"></div>
-    </div>
-
-    <!-- Orbs -->
-    <div class="orb w-96 h-96 bg-cobalt top-20 -left-32 animate-pulse-slow"></div>
-    <div class="orb w-72 h-72 bg-blue-400 bottom-20 -right-20 animate-pulse-slow" style="animation-delay:2s"></div>
-
-    <!-- Content -->
-    <div class="relative z-10 max-w-5xl mx-auto px-6 text-center pt-24">
-      <div
-        class="fade-up inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 text-cobaltLight text-sm font-medium">
-        <span class="w-2 h-2 rounded-full bg-cobalt animate-pulse"></span>
-        Inteligencia Artificial para Empresas Mexicanas
-      </div>
-      <h1 class="fade-up fade-up-d1 text-4xl md:text-6xl lg:text-7xl font-black leading-tight mb-6">
-        <span class="grad-text">Impro AI:</span><br />
-        Te vendo eficiencia<br />medida en <span class="text-cobaltLight">Retorno</span>
-      </h1>
-      <p class="fade-up fade-up-d2 text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-        Liberamos hasta el <span class="text-white font-semibold">50% del tiempo</span> operativo de tu equipo y
-        reducimos costos hasta un <span class="text-white font-semibold">20%</span> — convirtiendo datos en decisiones
-        rentables con agentes de IA autónomos.
-      </p>
-      <div class="fade-up fade-up-d3 flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="https://calendly.com/improaitech" target="_blank"
-          class="px-8 py-4 rounded-xl btn-glow font-bold text-white text-base tracking-wide">
-          📅 Agendar Llamada
-        </a>
-        <a href="#roi" class="px-8 py-4 rounded-xl btn-outline font-bold text-base tracking-wide">
-          📊 Calcular ROI
-        </a>
-      </div>
-
-      <!-- Stats bar -->
-      <div class="fade-up fade-up-d4 mt-20 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
-        <div class="glass rounded-2xl p-4">
-          <div class="text-3xl font-black text-cobaltLight">50%</div>
-          <div class="text-white/50 text-xs mt-1">Tiempo liberado</div>
-        </div>
-        <div class="glass rounded-2xl p-4">
-          <div class="text-3xl font-black text-cobaltLight">20%</div>
-          <div class="text-white/50 text-xs mt-1">Reducción de costos</div>
-        </div>
-        <div class="glass rounded-2xl p-4">
-          <div class="text-3xl font-black text-cobaltLight">24/7</div>
-          <div class="text-white/50 text-xs mt-1">Operación automática</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce z-10">
-      <span class="text-white/30 text-xs">Scroll</span>
-      <div class="w-0.5 h-8 bg-gradient-to-b from-cobalt to-transparent rounded"></div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ═══════════════════════════ PACKAGES ═══════════════════════════ -->
-  <section id="servicios" class="relative py-24 px-6 overflow-hidden">
-    <div class="orb w-80 h-80 bg-cobalt top-0 right-0 opacity-10"></div>
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16 fade-up">
-        <span class="text-cobalt text-sm font-semibold uppercase tracking-widest">Nuestros Paquetes</span>
-        <h2 class="text-3xl md:text-5xl font-black mt-3 mb-4">Soluciones a la <span class="grad-text">medida</span></h2>
-        <p class="text-white/50 max-w-xl mx-auto">Tres paquetes diseñados para escalar con tu empresa, desde la primera
-          automatización hasta la inteligencia de datos en tiempo real.</p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- IA Connect -->
-        <div class="glass glass-hover rounded-3xl p-8 fade-up fade-up-d1 relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-32 h-32 bg-cobalt rounded-full filter blur-3xl opacity-10"></div>
-          <div
-            class="w-14 h-14 rounded-2xl bg-cobalt/20 border border-cobalt/40 flex items-center justify-center text-2xl mb-6">
-            💬</div>
-          <div class="inline-block px-3 py-1 rounded-full bg-cobalt/20 text-cobalt text-xs font-semibold mb-4">Starter
-          </div>
-          <h3 class="text-2xl font-bold mb-3">IA Connect</h3>
-          <p class="text-white/50 text-sm mb-6 leading-relaxed">Chatbots inteligentes y atención al cliente automatizada
-            las 24 horas, los 7 días de la semana. Nunca pierdas una oportunidad de venta.</p>
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-cobalt">✓</span> Chatbot con IA
-              conversacional</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-cobalt">✓</span> Atención 24/7
-              sin intervención</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-cobalt">✓</span> Integración
-              WhatsApp / Web</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-cobalt">✓</span> Calificación
-              automática de leads</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-cobalt">✓</span> Panel de
-              métricas en tiempo real</li>
-          </ul>
-          <a href="#contacto" class="block text-center py-3 rounded-xl btn-outline text-sm font-semibold">Quiero este
-            paquete →</a>
-        </div>
-
-        <!-- IA Operativa (featured) -->
-        <div class="glass glass-hover rounded-3xl p-8 fade-up fade-up-d2 relative overflow-hidden border-cobalt/50"
-          style="box-shadow: 0 0 40px rgba(46,91,255,0.2);">
-          <div class="absolute top-0 right-0 w-40 h-40 bg-cobalt rounded-full filter blur-3xl opacity-15"></div>
-          <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-cobalt text-white text-xs font-bold">⭐ Popular
-          </div>
-          <div
-            class="w-14 h-14 rounded-2xl bg-cobalt/30 border border-cobalt/60 flex items-center justify-center text-2xl mb-6">
-            ⚙️</div>
-          <div class="inline-block px-3 py-1 rounded-full bg-cobalt/30 text-cobaltLight text-xs font-semibold mb-4">Pro
-          </div>
-          <h3 class="text-2xl font-bold mb-3">IA Operativa</h3>
-          <p class="text-white/50 text-sm mb-6 leading-relaxed">Automatiza los flujos de tu oficina con n8n y agentes
-            autónomos. Elimina el trabajo manual repetitivo y libera a tu equipo.</p>
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-cobalt">✓</span> Flujos n8n
-              personalizados</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-cobalt">✓</span> Automatización
-              de oficina completa</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-cobalt">✓</span> Integración
-              Aspel / ERP</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-cobalt">✓</span> Agentes
-              autónomos de procesos</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-cobalt">✓</span> Todo lo de IA
-              Connect</li>
-          </ul>
-          <a href="#contacto" class="block text-center py-3 rounded-xl btn-glow text-sm font-bold">Quiero este paquete
-            →</a>
-        </div>
-
-        <!-- IA Visionary -->
-        <div class="glass glass-hover rounded-3xl p-8 fade-up fade-up-d3 relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500 rounded-full filter blur-3xl opacity-10"></div>
-          <div
-            class="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-2xl mb-6">
-            📊</div>
-          <div class="inline-block px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 text-xs font-semibold mb-4">
-            Enterprise</div>
-          <h3 class="text-2xl font-bold mb-3">IA Visionary</h3>
-          <p class="text-white/50 text-sm mb-6 leading-relaxed">Dashboards ejecutivos impulsados por IA y análisis
-            predictivo que convierte tus datos en ventaja competitiva.</p>
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-purple-400">✓</span> Dashboards
-              en tiempo real</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-purple-400">✓</span> Análisis
-              predictivo con IA</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-purple-400">✓</span> Integración
-              SAP / Salesforce</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-purple-400">✓</span> Reportes
-              ejecutivos automáticos</li>
-            <li class="flex items-center gap-3 text-sm text-white/70"><span class="text-purple-400">✓</span> Todo lo de
-              IA Operativa</li>
-          </ul>
-          <a href="#contacto" class="block text-center py-3 rounded-xl btn-outline text-sm font-semibold">Quiero este
-            paquete →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ═══════════════════════════ PROCESS / ROI ═══════════════════════════ -->
-  <section id="proceso" class="py-24 px-6 relative overflow-hidden grid-bg">
-    <div class="orb w-96 h-96 bg-cobalt left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-8"></div>
-    <div class="max-w-7xl mx-auto relative z-10">
-      <div class="text-center mb-16 fade-up">
-        <span class="text-cobalt text-sm font-semibold uppercase tracking-widest">Proceso de Evaluación</span>
-        <h2 class="text-3xl md:text-5xl font-black mt-3 mb-4">De cero al <span class="grad-text">ROI medible</span></h2>
-        <p class="text-white/50 max-w-xl mx-auto">Un proceso claro, transparente y orientado a resultados en 4 semanas.
-        </p>
-      </div>
-      <div class="grid md:grid-cols-4 gap-6">
-        <div class="glass rounded-2xl p-6 fade-up fade-up-d1 text-center">
-          <div class="text-4xl font-black text-cobalt/30 mb-2">01</div>
-          <div class="text-2xl mb-3">🔍</div>
-          <h4 class="font-bold mb-2">Diagnóstico</h4>
-          <p class="text-white/40 text-sm">Analizamos tus procesos y detectamos el mayor potencial de automatización.
-          </p>
-        </div>
-        <div class="glass rounded-2xl p-6 fade-up fade-up-d2 text-center">
-          <div class="text-4xl font-black text-cobalt/30 mb-2">02</div>
-          <div class="text-2xl mb-3">📐</div>
-          <h4 class="font-bold mb-2">Diseño</h4>
-          <p class="text-white/40 text-sm">Creamos el plan de implementación con métricas de retorno específicas.</p>
-        </div>
-        <div class="glass rounded-2xl p-6 fade-up fade-up-d3 text-center">
-          <div class="text-4xl font-black text-cobalt/30 mb-2">03</div>
-          <div class="text-2xl mb-3">🚀</div>
-          <h4 class="font-bold mb-2">Implementación</h4>
-          <p class="text-white/40 text-sm">Desplegamos agentes y flujos en tu entorno actual sin interrumpir
-            operaciones.</p>
-        </div>
-        <div class="glass rounded-2xl p-6 fade-up fade-up-d4 text-center">
-          <div class="text-4xl font-black text-cobalt/30 mb-2">04</div>
-          <div class="text-2xl mb-3">📈</div>
-          <h4 class="font-bold mb-2">Optimización</h4>
-          <p class="text-white/40 text-sm">Medimos resultados y ajustamos para maximizar el ROI de manera continua.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ═══════════════════════════ DIFFERENTIATORS ═══════════════════════════ -->
-  <section class="py-24 px-6 relative overflow-hidden">
-    <div class="orb w-80 h-80 bg-cobalt -left-20 bottom-0 opacity-12"></div>
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16 fade-up">
-        <span class="text-cobalt text-sm font-semibold uppercase tracking-widest">¿Por qué Impro AI?</span>
-        <h2 class="text-3xl md:text-5xl font-black mt-3 mb-4">Lo que nos hace <span class="grad-text">diferentes</span>
-        </h2>
-      </div>
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Agentes Autónomos -->
-        <div class="glass glass-hover rounded-3xl p-8 fade-up fade-up-d1">
-          <div
-            class="w-16 h-16 rounded-2xl bg-cobalt/20 border border-cobalt/40 flex items-center justify-center text-3xl mb-6">
-            🤖</div>
-          <h3 class="text-xl font-bold mb-3">Agentes Autónomos</h3>
-          <p class="text-white/50 text-sm leading-relaxed mb-4">No son simples bots. Nuestros agentes <strong
-              class="text-white">ejecutan acciones reales</strong>: envían correos, actualizan registros, generan
-            reportes y toman decisiones sin intervención humana.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-2 py-1 rounded-md bg-cobalt/15 text-cobalt text-xs">Acción real</span>
-            <span class="px-2 py-1 rounded-md bg-cobalt/15 text-cobalt text-xs">Decisiones autónomas</span>
-            <span class="px-2 py-1 rounded-md bg-cobalt/15 text-cobalt text-xs">Multi-sistema</span>
-          </div>
-        </div>
-        <!-- Último Kilómetro -->
-        <div class="glass glass-hover rounded-3xl p-8 fade-up fade-up-d2">
-          <div
-            class="w-16 h-16 rounded-2xl bg-green-500/20 border border-green-500/40 flex items-center justify-center text-3xl mb-6">
-            🔗</div>
-          <h3 class="text-xl font-bold mb-3">El Último Kilómetro</h3>
-          <p class="text-white/50 text-sm leading-relaxed mb-4">Nos especializamos en la <strong
-              class="text-white">integración profunda</strong> con los sistemas que ya usas: SAP, Salesforce, Aspel, y
-            más. Sin migración, sin fricción.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-2 py-1 rounded-md bg-green-500/15 text-green-400 text-xs">SAP</span>
-            <span class="px-2 py-1 rounded-md bg-green-500/15 text-green-400 text-xs">Salesforce</span>
-            <span class="px-2 py-1 rounded-md bg-green-500/15 text-green-400 text-xs">Aspel</span>
-            <span class="px-2 py-1 rounded-md bg-green-500/15 text-green-400 text-xs">n8n</span>
-          </div>
-        </div>
-        <!-- Contexto Mexicano -->
-        <div class="glass glass-hover rounded-3xl p-8 fade-up fade-up-d3">
-          <div
-            class="w-16 h-16 rounded-2xl bg-red-500/20 border border-red-500/40 flex items-center justify-center text-3xl mb-6">
-            🇲🇽</div>
-          <h3 class="text-xl font-bold mb-3">Contexto Mexicano</h3>
-          <p class="text-white/50 text-sm leading-relaxed mb-4">Entendemos la <strong class="text-white">realidad
-              empresarial de México</strong>: facturación CFDI, SAT, procesos locales y cultura de negocio. Nuestras IA
-            hablan tu idioma.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-2 py-1 rounded-md bg-red-500/15 text-red-400 text-xs">CFDI / SAT</span>
-            <span class="px-2 py-1 rounded-md bg-red-500/15 text-red-400 text-xs">Español nativo</span>
-            <span class="px-2 py-1 rounded-md bg-red-500/15 text-red-400 text-xs">PyMEs & Corporativos</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ═══════════════════════════ ROI CALCULATOR ═══════════════════════════ -->
-  <section id="roi" class="py-24 px-6 relative overflow-hidden grid-bg">
-    <div class="max-w-3xl mx-auto">
-      <div class="text-center mb-12 fade-up">
-        <span class="text-cobalt text-sm font-semibold uppercase tracking-widest">Calculadora</span>
-        <h2 class="text-3xl md:text-5xl font-black mt-3 mb-4">Calcula tu <span class="grad-text">ROI</span></h2>
-        <p class="text-white/50">Mueve los sliders y descubre cuánto puede generar Impro AI para tu empresa.</p>
-      </div>
-      <div class="glass rounded-3xl p-8 fade-up fade-up-d1">
-        <div class="space-y-8">
-          <div>
-            <div class="flex justify-between mb-3">
-              <label class="text-sm font-medium">Empleados en tareas manuales</label>
-              <span class="text-cobalt font-bold" id="emp-val">10</span>
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">Impro AI</span>
+                <span class="logo-dot">.</span>
             </div>
-            <input type="range" min="1" max="100" value="10" class="w-full accent-cobalt" id="emp-slider"
-              oninput="calcROI()" />
-          </div>
-          <div>
-            <div class="flex justify-between mb-3">
-              <label class="text-sm font-medium">Horas manuales por semana / empleado</label>
-              <span class="text-cobalt font-bold" id="hrs-val">20</span>
-            </div>
-            <input type="range" min="1" max="60" value="20" class="w-full accent-cobalt" id="hrs-slider"
-              oninput="calcROI()" />
-          </div>
-          <div>
-            <div class="flex justify-between mb-3">
-              <label class="text-sm font-medium">Costo hora / empleado (MXN)</label>
-              <span class="text-cobalt font-bold" id="cost-val">$120</span>
-            </div>
-            <input type="range" min="50" max="500" value="120" step="10" class="w-full accent-cobalt" id="cost-slider"
-              oninput="calcROI()" />
-          </div>
-        </div>
-        <div class="mt-10 grid grid-cols-2 gap-4">
-          <div class="rounded-2xl bg-cobalt/10 border border-cobalt/30 p-5 text-center">
-            <div class="text-white/50 text-xs mb-1">Ahorro mensual estimado</div>
-            <div class="text-3xl font-black text-cobaltLight" id="roi-monthly">$41,600</div>
-            <div class="text-white/30 text-xs mt-1">MXN / mes</div>
-          </div>
-          <div class="rounded-2xl bg-cobalt/10 border border-cobalt/30 p-5 text-center">
-            <div class="text-white/50 text-xs mb-1">Ahorro anual estimado</div>
-            <div class="text-3xl font-black text-cobaltLight" id="roi-annual">$499,200</div>
-            <div class="text-white/30 text-xs mt-1">MXN / año</div>
-          </div>
-        </div>
-        <p class="text-white/30 text-xs text-center mt-4">* Estimación basada en automatizar el 50% del tiempo manual
-          con Impro AI.</p>
-        <a href="https://calendly.com/YOUR_LINK" target="_blank"
-          class="mt-6 block text-center py-4 rounded-xl btn-glow font-bold text-white">
-          📅 Agendar llamada para obtener análisis exacto
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ═══════════════════════════ TESTIMONIALS ═══════════════════════════ -->
-  <section class="py-24 px-6 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16 fade-up">
-        <span class="text-cobalt text-sm font-semibold uppercase tracking-widest">Resultados Reales</span>
-        <h2 class="text-3xl md:text-5xl font-black mt-3 mb-4">Lo que logran <span class="grad-text">nuestros
-            clientes</span></h2>
-      </div>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="glass glass-hover rounded-3xl p-7 fade-up fade-up-d1">
-          <div class="flex items-center gap-1 mb-4">
-            <span class="text-yellow-400">★★★★★</span>
-          </div>
-          <p class="text-white/70 text-sm leading-relaxed mb-5">"Impro AI automatizó nuestro proceso de cotizaciones. Lo
-            que antes tomaba 3 horas ahora ocurre en minutos. Recuperamos el ROI en el primer mes."</p>
-          <div class="flex items-center gap-3">
-            <div
-              class="w-10 h-10 rounded-full bg-cobalt/30 flex items-center justify-center font-bold text-cobaltLight">RC
-            </div>
-            <div>
-              <div class="font-semibold text-sm">Ricardo C.</div>
-              <div class="text-white/40 text-xs">Director General, Distribuidora CDMX</div>
-            </div>
-          </div>
-        </div>
-        <div class="glass glass-hover rounded-3xl p-7 fade-up fade-up-d2">
-          <div class="flex items-center gap-1 mb-4">
-            <span class="text-yellow-400">★★★★★</span>
-          </div>
-          <p class="text-white/70 text-sm leading-relaxed mb-5">"El chatbot de IA Connect atiende a nuestros clientes de
-            madrugada. Aumentamos ventas un 35% solo con el paquete básico. Increíble."</p>
-          <div class="flex items-center gap-3">
-            <div
-              class="w-10 h-10 rounded-full bg-cobalt/30 flex items-center justify-center font-bold text-cobaltLight">LM
-            </div>
-            <div>
-              <div class="font-semibold text-sm">Laura M.</div>
-              <div class="text-white/40 text-xs">CEO, E-commerce Monterrey</div>
-            </div>
-          </div>
-        </div>
-        <div class="glass glass-hover rounded-3xl p-7 fade-up fade-up-d3">
-          <div class="flex items-center gap-1 mb-4">
-            <span class="text-yellow-400">★★★★★</span>
-          </div>
-          <p class="text-white/70 text-sm leading-relaxed mb-5">"Los dashboards de IA Visionary conectados con nuestro
-            SAP transformaron cómo tomamos decisiones. Ahora tenemos visibilidad total en tiempo real."</p>
-          <div class="flex items-center gap-3">
-            <div
-              class="w-10 h-10 rounded-full bg-cobalt/30 flex items-center justify-center font-bold text-cobaltLight">AM
-            </div>
-            <div>
-              <div class="font-semibold text-sm">Andrés M.</div>
-              <div class="text-white/40 text-xs">CFO, Manufactura Guadalajara</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ═══════════════════════════ CONTACT FORM ═══════════════════════════ -->
-  <section id="contacto" class="py-24 px-6 relative overflow-hidden grid-bg">
-    <div class="orb w-80 h-80 bg-cobalt right-0 top-0 opacity-10"></div>
-    <div class="max-w-5xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-start">
-        <!-- Left: info -->
-        <div class="fade-up">
-          <span class="text-cobalt text-sm font-semibold uppercase tracking-widest">Contáctanos</span>
-          <h2 class="text-3xl md:text-4xl font-black mt-3 mb-4">¿Listo para <span class="grad-text">transformar</span>
-            tu operación?</h2>
-          <p class="text-white/50 mb-8 leading-relaxed">Agenda una sesión de diagnóstico gratuita de 30 minutos y
-            descubre exactamente cuánto tiempo y dinero puedes recuperar con Impro AI.</p>
-          <div class="space-y-4">
-            <div class="flex items-center gap-4">
-              <div class="w-10 h-10 rounded-xl glass flex items-center justify-center">📍</div>
-              <div>
-                <div class="font-medium text-sm">Ubicación</div>
-                <div class="text-white/40 text-sm">Aguascalientes, Aguascalientes, México</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-4">
-              <div class="w-10 h-10 rounded-xl glass flex items-center justify-center">📧</div>
-              <div>
-                <div class="font-medium text-sm">Email</div>
-                <div class="text-white/40 text-sm">improaitech@gmail.com</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-4">
-              <div class="w-10 h-10 rounded-xl glass flex items-center justify-center">💬</div>
-              <div>
-                <div class="font-medium text-sm">WhatsApp</div>
-                <div class="text-white/40 text-sm">+52 4491070164</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Right: form -->
-        <div class="glass rounded-3xl p-8 fade-up fade-up-d1">
-          <form onsubmit="submitForm(event)" class="space-y-5">
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium mb-2 text-white/70">Nombre</label>
-                <input type="text" placeholder="Tu nombre" class="w-full px-4 py-3 rounded-xl form-input text-sm"
-                  required />
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-2 text-white/70">Empresa</label>
-                <input type="text" placeholder="Tu empresa" class="w-full px-4 py-3 rounded-xl form-input text-sm"
-                  required />
-              </div>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-2 text-white/70">Email</label>
-              <input type="email" placeholder="correo@empresa.com"
-                class="w-full px-4 py-3 rounded-xl form-input text-sm" required />
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-2 text-white/70">Teléfono</label>
-              <input type="tel" placeholder="+52 55 0000 0000" class="w-full px-4 py-3 rounded-xl form-input text-sm" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-2 text-white/70">¿Cuál es tu mayor reto operativo?</label>
-              <textarea rows="4" placeholder="Cuéntanos sobre los procesos que más tiempo consumen..."
-                class="w-full px-4 py-3 rounded-xl form-input text-sm resize-none"></textarea>
-            </div>
-            <button type="submit" class="w-full py-4 rounded-xl btn-glow font-bold text-white text-sm tracking-wide">
-              Solicitar Diagnóstico Gratuito 🚀
+            <nav class="nav-links" id="nav-links">
+                <a href="#soluciones">Soluciones</a>
+                <a href="#sectores">Sectores</a>
+                <a href="#por-que">Por qué elegirnos</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
-          </form>
-          <div id="form-success" class="hidden text-center py-6">
-            <div class="text-4xl mb-3">✅</div>
-            <div class="font-bold text-lg text-cobaltLight">¡Mensaje enviado!</div>
-            <p class="text-white/50 text-sm mt-2">Nos pondremos en contacto en menos de 24 horas.</p>
-          </div>
+            <a href="#contacto" class="btn-primary nav-cta">Agenda una Auditoría Gratuita</a>
         </div>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
-  <footer id="blog" class="border-t border-cobalt/10 py-12 px-6">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid md:grid-cols-4 gap-10 mb-10">
-        <div class="md:col-span-1">
-          <div class="flex items-center gap-2 mb-4">
-            <div class="w-8 h-8 rounded-lg btn-glow flex items-center justify-center text-white font-black text-sm">I
+    <!-- Hero Section -->
+    <section class="hero content-section">
+        <div class="hero-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+        </div>
+        <div class="container hero-container">
+            <div class="hero-content reveal reveal-left">
+                <div class="badge">Agentes de IA Empresariales Autónomos</div>
+                <h1 class="hero-title">Deja de perder ventas por <span class="highlight-cyan">falta de respuesta</span></h1>
+                <p class="hero-subtitle">Implementamos tecnología de Agentes de Inteligencia Artificial para automatizar procesos clave, recuperar horas de operación y atender a tus prospectos en milisegundos.</p>
+                <div class="hero-cta">
+                    <a href="#contacto" class="btn-primary btn-large">Agenda una Auditoría Gratuita</a>
+                </div>
             </div>
-            <span class="font-bold text-xl">Impro <span class="text-cobalt">AI</span></span>
-          </div>
-          <p class="text-white/40 text-sm leading-relaxed">Convertimos operaciones estancadas en ventajas competitivas
-            medibles mediante Inteligencia Artificial.</p>
-          <div class="flex gap-3 mt-5">
-            <a href="#"
-              class="w-9 h-9 rounded-lg glass flex items-center justify-center text-white/50 hover:text-white hover:border-cobalt/60 transition-all text-sm">in</a>
-            <a href="#"
-              class="w-9 h-9 rounded-lg glass flex items-center justify-center text-white/50 hover:text-white hover:border-cobalt/60 transition-all text-sm">𝕏</a>
-            <a href="#"
-              class="w-9 h-9 rounded-lg glass flex items-center justify-center text-white/50 hover:text-white hover:border-cobalt/60 transition-all text-sm">▶</a>
-          </div>
+            <div class="hero-graphics">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="chat-header-mock">WhatsApp Business</div>
+                        <div class="chat-msgs">
+                            <!-- Floating chat boxes -->
+                            <div class="chat-bubble lead-msg">
+                                <p>Hola, ¿sus chatbots se pueden integrar con mi CRM de logística?</p>
+                                <span class="time">10:45 AM</span>
+                            </div>
+                            <div class="chat-bubble bot-reply scale-in">
+                                <p>¡Hola! Sí, diseñamos ecosistemas a medida que se conectan nativamente con CRMs, ERPs y APIs para responder con datos en tiempo real.</p>
+                                <span class="time">10:45 AM</span>
+                            </div>
+                            <div class="chat-bubble lead-msg scale-in delay">
+                                <p>Excelente, justo lo que necesitamos para automatizar el soporte.</p>
+                                <span class="time">10:46 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-          <h5 class="font-semibold text-sm mb-4 text-white/80">Servicios</h5>
-          <ul class="space-y-2">
-            <li><a href="#servicios" class="text-white/40 text-sm hover:text-cobaltLight transition-colors">IA
-                Connect</a></li>
-            <li><a href="#servicios" class="text-white/40 text-sm hover:text-cobaltLight transition-colors">IA
-                Operativa</a></li>
-            <li><a href="#servicios" class="text-white/40 text-sm hover:text-cobaltLight transition-colors">IA
-                Visionary</a></li>
-            <li><a href="#contacto" class="text-white/40 text-sm hover:text-cobaltLight transition-colors">Diagnóstico
-                Gratuito</a></li>
-          </ul>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section content-section" id="problema">
+        <div class="container text-center">
+            <h2 class="section-title reveal reveal-bottom">El modelo tradicional <span class="highlight-cyan">está roto</span></h2>
+            <div class="grid-3 p-top">
+                <div class="card problem-card glass-panel reveal reveal-bottom delay-1">
+                    <div class="icon-bulb">💬</div>
+                    <h3>Saturación en WhatsApp</h3>
+                    <p>Centenares de mensajes en el limbo. Clientes que abandonan el chat por falta de respuesta inmediata, prefiriendo a la competencia.</p>
+                </div>
+                <div class="card problem-card glass-panel reveal reveal-bottom delay-2">
+                    <div class="icon-bulb">🚨</div>
+                    <h3>Errores al Capturar Datos</h3>
+                    <p>Personal administrativo sufriendo retrasos y errores humanos pasando datos del chat al sistema. Un cuello de botella muy costoso.</p>
+                </div>
+                <div class="card problem-card glass-panel reveal reveal-bottom delay-3">
+                    <div class="icon-bulb">🐢</div>
+                    <h3>Atención muy Lenta</h3>
+                    <p>Tickets pospuestos, horario de oficina restrictivo, y equipos de soporte quemados repitiendo las mismas respuestas.</p>
+                </div>
+            </div>
         </div>
-        <div>
-          <h5 class="font-semibold text-sm mb-4 text-white/80">Empresa</h5>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-white/40 text-sm hover:text-cobaltLight transition-colors">Nosotros</a></li>
-            <li><a href="#" class="text-white/40 text-sm hover:text-cobaltLight transition-colors">Blog</a></li>
-            <li><a href="#proceso" class="text-white/40 text-sm hover:text-cobaltLight transition-colors">Proceso</a>
-            </li>
-            <li><a href="#contacto" class="text-white/40 text-sm hover:text-cobaltLight transition-colors">Contacto</a>
-            </li>
-          </ul>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution-section content-section" id="soluciones">
+        <div class="container text-center">
+            <h2 class="section-title reveal reveal-bottom">Nuestra Solución: <span class="highlight-cyan">Agentes Inteligentes</span></h2>
+            <p class="section-subtitle reveal reveal-bottom delay-1">No vendemos scripts básicos de preguntas. Creamos ecosistemas que razonan utilizando RAG (Generación Aumentada por Recuperación) logrando una absoluta precisión.</p>
+            <div class="grid-3 p-top">
+                <div class="feature-item reveal reveal-bottom delay-2">
+                    <div class="feature-icon">📑</div>
+                    <h4>Aprenden de tus Manuales</h4>
+                    <p>Ingerimos tus PDFs, hojas técnicas y catálogos. El agente responde como el experto más capacitado de tu empresa, sin alucinaciones de la IA.</p>
+                </div>
+                <div class="feature-item reveal reveal-bottom delay-3">
+                    <div class="feature-icon">🔄</div>
+                    <h4>Se Integran a tu CRM y ERP</h4>
+                    <p>Automatización de 360 grados: pueden crear clientes en Salesforce, verificar stock en SAP o consultar bases de datos SQL en tiempo real.</p>
+                </div>
+                <div class="feature-item reveal reveal-bottom delay-4">
+                    <div class="feature-icon">✨</div>
+                    <h4>Operan 24/7 de Inmediato</h4>
+                    <p>Resolución instantánea en la madrugada. Incremento dramático de conversiones, porque quien responde en menos de 5 minutos, gana.</p>
+                </div>
+            </div>
         </div>
-        <div>
-          <h5 class="font-semibold text-sm mb-4 text-white/80">Blog Reciente</h5>
-          <ul class="space-y-3">
-            <li><a href="#" class="text-white/40 text-sm hover:text-cobaltLight transition-colors leading-snug">5
-                procesos que debes automatizar antes de 2026</a></li>
-            <li><a href="#" class="text-white/40 text-sm hover:text-cobaltLight transition-colors leading-snug">n8n vs
-                Zapier: ¿Cuál elegir para tu empresa?</a></li>
-            <li><a href="#" class="text-white/40 text-sm hover:text-cobaltLight transition-colors leading-snug">Cómo
-                calcular el ROI de la IA en PyMEs mexicanas</a></li>
-          </ul>
+    </section>
+
+    <!-- Sectors Section -->
+    <section class="sectors-section content-section" id="sectores">
+        <div class="container">
+            <h2 class="section-title text-center">Casos de Uso <span class="highlight-cyan">Por Sector</span></h2>
+            <p class="text-center section-subtitle">Cada industria requiere un agente hiper-especializado. Conoce la inteligencia artificial aplicada a tus necesidades.</p>
+            
+            <div class="tabs-container">
+                <!-- Tab Headers -->
+                <div class="sector-tabs">
+                    <button class="tab-btn active" data-target="inmobiliario">Sector Inmobiliario</button>
+                    <button class="tab-btn" data-target="logistica">Logística y Manufactura</button>
+                    <button class="tab-btn" data-target="profesionales">Servicios Profesionales y Chatbots Personalizados</button>
+                </div>
+
+                <!-- Tab Content: Inmobiliario -->
+                <div class="tab-content active" id="inmobiliario">
+                    <div class="sector-header text-center reveal reveal-bottom">
+                        <div class="icon-large">🏢</div>
+                        <h3>Paquete Inmobiliario Impro AI</h3>
+                        <p>Agentes que califican leads 24/7, agendan visitas y envían fichas técnicas automatizadas por WhatsApp.</p>
+                    </div>
+                    <div class="grid-2 p-top list-cards">
+                        <div class="card agent-card glass-panel reveal reveal-bottom delay-1">
+                            <span class="agent-badge entry">Nivel Entrada</span>
+                            <h4>Clasificador de Leads</h4>
+                            <p class="agent-obj">Capturar y filtrar interesados en WhatsApp o Web a cualquier hora.</p>
+                            <div class="divider"></div>
+                            <ul class="agent-features">
+                                <li><strong>Lo que hace:</strong> Entiende lenguaje natural ("Busco depa por Polanco de max 25k"). Saluda, pregunta presupuesto, zona, recámaras y urgencia.</li>
+                                <li><strong>Resultado:</strong> Entrega una lista de leads "calientes" listos para que tu asesor los cierre.</li>
+                            </ul>
+                        </div>
+                        <div class="card agent-card glass-panel reveal reveal-bottom delay-2">
+                            <span class="agent-badge pro">Nivel Profesional</span>
+                            <h4>Concierge Inmobiliario RAG</h4>
+                            <p class="agent-obj">Responder dudas técnicas y mostrar stock sin humanos.</p>
+                            <div class="divider"></div>
+                            <ul class="agent-features">
+                                <li><strong>Lo que hace:</strong> Utiliza RAG para interpretar fichas técnicas inmobiliarias y responder dudas puntuales sobre metros cuadrados o amenidades.</li>
+                                <li><strong>Antigravity:</strong> Sincroniza al instante cualquier cambio de precio con Google Cloud.</li>
+                                <li><strong>Impacto:</strong> Reducción del 80% en consultas repetitivas.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Tab Content: Logistica -->
+                <div class="tab-content" id="logistica">
+                    <div class="sector-header text-center">
+                        <div class="icon-large">🚚</div>
+                        <h3>Paquete Logística y Manufactura</h3>
+                        <p>Automatización de seguimiento de pedidos en patio, trazabilidad, y reparación de planta por texto o nota de voz.</p>
+                    </div>
+                    <div class="grid-center-single p-top list-cards">
+                        <div class="card agent-card glass-panel">
+                            <span class="agent-badge entry">Nivel Operativo</span>
+                            <h4>Monitor de Piso y Almacén</h4>
+                            <p class="agent-obj">Acceder al inventario sin usar pantallas de computadora.</p>
+                            <div class="divider"></div>
+                            <ul class="agent-features">
+                                <li><strong>Lo que hace:</strong> Un montacarguista pregunta por nota de voz cuántas tarimas quedan del lote 5. El bot contesta al instante.</li>
+                                <li><strong>Antigravity:</strong> Conexión profunda y nativa a SAP/Oracle o bases de datos SQL para consultar variables de peso volumétrico.</li>
+                                <li><strong>Resultado:</strong> Cero pausas injustificadas en los andenes de maniobra.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Tab Content: Profesionales -->
+                <div class="tab-content" id="profesionales">
+                    <div class="sector-header text-center">
+                        <div class="icon-large">💼</div>
+                        <h3>Servicios Profesionales y Chatbots Personalizados</h3>
+                        <p>Asistentes virtuales ininterrumpidos y seguros para Consultorios Médicos, Clínicas de Especialidades, y Despachos Computarizados.</p>
+                    </div>
+                    <div class="grid-2 p-top list-cards list-2">
+                        <div class="card agent-card glass-panel">
+                            <span class="agent-badge clinic">Para Sector Salud</span>
+                            <h4>Planner Pro Clínico</h4>
+                            <p class="agent-obj">Recepcionista experto con cero errores en agenda y triage primario.</p>
+                            <div class="divider"></div>
+                            <ul class="agent-features">
+                                <li><strong>Tiempo Real:</strong> Chequea disponibilidad y libera huecos al instante cuando los pacientes cancelan sin previo aviso.</li>
+                                <li><strong>Validaciones Médicas:</strong> Exige "orden médica escaneada" antes del agendamiento o determina la recurrencia de estudios.</li>
+                                <li><strong>Lógica de Urgencias:</strong> El Agente filtra sintomatologías del lenguaje informal (ej. "dolor fuerte torácico") interrumpiendo flujo de cita estándar para canalizar a emergencias.</li>
+                            </ul>
+                        </div>
+                        <div class="card agent-card glass-panel featured-card">
+                            <span class="agent-badge accountant">Chatbots Inteligentes</span>
+                            <h4>Chatbots personalizados</h4>
+                            <p class="agent-obj">Adaptabilidad Total para Cualquier Industria.</p>
+                            <div class="divider"></div>
+                            <ul class="agent-features">
+                                <li><strong>Nuestra solución:</strong> No es un software rígido, sino un ecosistema conversacional diseñado para moldearse específicamente a la estructura operativa y objetivos de tu empresa.</li>
+                                <li><strong>Arquitectura a Medida:</strong> No utilizamos plantillas genéricas. Analizamos procesos internos para construir un flujo lógico que resuelva necesidades reales en cualquier sector.</li>
+                                <li><strong>Integración Multidisciplinaria:</strong> Capaces de conectarse con tus herramientas actuales (CRM, bases de datos, APIs de mapas o sistemas de inventario) para dar respuestas basadas en datos reales.</li>
+                                <li><strong>Omnicanalidad Real:</strong> Diseñamos soluciones que se despliegan donde tus clientes están, manteniendo una identidad de marca coherente y memoria de conversación fluida.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
-      </div>
-      <div class="divider mb-6"></div>
-      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-        <p class="text-white/30 text-xs">© 2026 Impro AI. Todos los derechos reservados.</p>
-        <div class="flex gap-6">
-          <a href="#" class="text-white/30 text-xs hover:text-white/60 transition-colors">Privacidad</a>
-          <a href="#" class="text-white/30 text-xs hover:text-white/60 transition-colors">Términos</a>
-          <a href="#" class="text-white/30 text-xs hover:text-white/60 transition-colors">Cookies</a>
+    </section>
+
+    <!-- Why Us Section -->
+    <section class="why-us content-section" id="por-que">
+        <div class="container text-center">
+            <h2 class="section-title reveal reveal-bottom">¿Por qué <span class="highlight-cyan">Impro AI</span>?</h2>
+            <p class="section-subtitle reveal reveal-bottom delay-1">No somos una plataforma extranjera genérica. Somos una agencia humana mexicana integrando el cenit de la computación.</p>
+            <div class="grid-3 p-top">
+                <div class="why-card reveal reveal-bottom delay-2">
+                    <div class="icon-bulb icon-glow">☁️</div>
+                    <h4>Potenciado por Antigravity</h4>
+                    <p>Integración profunda con infraestructuras de clase mundial, y modelos alojados en el ecosistema seguro de <strong>Google Cloud</strong>.</p>
+                </div>
+                <div class="why-card reveal reveal-bottom delay-3">
+                    <div class="icon-bulb icon-glow">🔒</div>
+                    <h4>Privacidad Intransigente</h4>
+                    <p>La inteligencia corporativa de tu negocio mexicano (listas, cotizaciones, manuales) no se utiliza para entrenar IAs de terceros. Escriptado con máxima seguridad.</p>
+                </div>
+                <div class="why-card reveal reveal-bottom delay-4">
+                    <div class="icon-bulb icon-glow">🇲🇽</div>
+                    <h4>Expertise Local B2B</h4>
+                    <p>Operamos y nos comunicamos desde México. Cero horarios extraños o problemas por "barreras de acento". Entendemos exactamente tu desafío logístico local.</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </footer>
+    </section>
 
-  <!-- ═══════════════════════════ CHAT WIDGET PLACEHOLDER ═══════════════════════════ -->
-  <div id="chat-widget" class="fixed bottom-6 right-6 z-50 group cursor-pointer" title="Chat automático — próximamente">
-    <div class="relative">
-      <div
-        class="w-14 h-14 rounded-full btn-glow flex items-center justify-center text-2xl shadow-2xl animate-glow transition-transform group-hover:scale-110">
-        💬
-      </div>
-      <span
-        class="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-obsidian animate-pulse"></span>
-      <div
-        class="absolute bottom-16 right-0 glass rounded-2xl px-4 py-3 text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-        Chat IA — Próximamente 🤖
-      </div>
-    </div>
-  </div>
+    <!-- FAQ Section -->
+    <section class="faq-section content-section" id="faq">
+        <div class="container">
+            <h2 class="section-title text-center">Despejemos Dudas Reales (<span class="highlight-cyan">FAQ</span>)</h2>
+            <div class="faq-container p-top">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Es muy costoso o complejo integrar esto con mi empresa que es tradicional?</span>
+                        <span class="faq-arrow">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nuestro modelo se basa en un cálculo de retorno de inversión. Normalmente los ahorros en horas improductivas y errores de captura pagan el licenciamiento en el segundo mes. Construimos flujos sencillos; tú solo debes disfrutar viendo el panel directivo con citas terminadas o tickets resueltos.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Las IAs van a responder cosas equivocadas o confusas a los clientes?</span>
+                        <span class="faq-arrow">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>No. Los modelos públicos tienen "alucinaciones" porque tratan de saberlo todo. Nosotros utilizamos "Redes Acotadas" y <strong class="highlight-cyan">Sistemas RAG</strong>, que funcionan como escudos. Tu IA está constreñida a solo opinar de acuerdo al índice y manuales que autorices.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Mis empleados perderán valor?</span>
+                        <span class="faq-arrow">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Tus empleados ganarán valor cualitativo masivo. En vez de que un Account Manager senior esté abriendo PDFs tecleando en Excel su cotización de un correo repetitivo, el agente lo formula automáticamente. Y tu talento humano se dedica a las decisiones difíciles de relaciones públicas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- ═══════════════════════════ SCRIPTS ═══════════════════════════ -->
-  <script>
-    // ─── Mobile menu ───
-    function toggleMenu() {
-      const m = document.getElementById('mobile-menu');
-      m.classList.toggle('open');
-    }
+    <!-- Footer / CTA -->
+    <footer class="footer" id="contacto">
+        <div class="footer-bg-glow"></div>
+        <div class="container text-center reveal reveal-scale">
+            <h2 class="footer-title">La Competencia Ya Está <span class="highlight-cyan">Automatizando</span></h2>
+            <p class="footer-subtitle">El precio de posponer la integración de Agentes IA es entregar tu cuota de mercado a las operaciones modernas.</p>
+            <div class="footer-cta wrapper">
+                <a href="https://calendly.com/" target="_blank" class="btn-primary btn-massive">
+                    <span class="btn-icon">📅</span> Agenda una Auditoría Técnica de Viabilidad
+                </a>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-brand">
+                    <div class="logo">Impro AI<span class="logo-dot">.</span></div>
+                    <p>Agencia Tecnológica CDMX, México.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Casos de Éxito</a>
+                    <a href="#">Privacidad de Datos C-Level</a>
+                    <a href="#">LinkedIn Corporation</a>
+                </div>
+            </div>
+            <p class="copyright">© 2026 Impro AI Technologies Corporative. Arquitectura diseñada bajo estándares mundiales.</p>
+        </div>
+    </footer>
 
-    // ─── Scroll fade-in ───
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-    // ─── ROI Calculator ───
-    function calcROI() {
-      const emp = parseInt(document.getElementById('emp-slider').value);
-      const hrs = parseInt(document.getElementById('hrs-slider').value);
-      const cost = parseInt(document.getElementById('cost-slider').value);
-
-      document.getElementById('emp-val').textContent = emp;
-      document.getElementById('hrs-val').textContent = hrs;
-      document.getElementById('cost-val').textContent = '$' + cost;
-
-      // Auto % = 50% time saved
-      const monthlySavings = emp * hrs * 4 * cost * 0.50;
-      const fmt = (n) => '$' + Math.round(n).toLocaleString('es-MX');
-      document.getElementById('roi-monthly').textContent = fmt(monthlySavings);
-      document.getElementById('roi-annual').textContent = fmt(monthlySavings * 12);
-    }
-
-    // ─── Contact form ───
-    function submitForm(e) {
-      e.preventDefault();
-      const form = e.target;
-      form.classList.add('hidden');
-      document.getElementById('form-success').classList.remove('hidden');
-    }
-
-    // ─── Navbar hide/show on scroll ───
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-      const nav = document.querySelector('nav');
-      const curr = window.scrollY;
-      if (curr > 80) {
-        nav.classList.add('shadow-lg', 'shadow-cobalt/5');
-      } else {
-        nav.classList.remove('shadow-lg', 'shadow-cobalt/5');
-      }
-      lastScroll = curr;
-    });
-  </script>
+    <script src="./js/main.js"></script>
 </body>
-
 </html>
