@@ -872,6 +872,7 @@ h1, h2, h3, h4, h5, h6 {
 
     .phone-mockup {
         width: 100%;
-        max-width: 280px;
+        max-width: 220px;
+        height: 480px;
     }
 }
