@@ -1319,3 +1319,54 @@ h1, h2, h3, h4, h5, h6 {
         transform: scale(1);
     }
 }
+
+/* =====================================================
+   SAFARI iOS FIX: Disable heavy GPU effects on mobile
+   backdrop-filter, blur() and will-change cause Safari
+   to fail rendering or require multiple reloads.
+   ===================================================== */
+@media screen and (max-width: 768px) {
+
+    /* Remove background blur shapes — filter:blur(100px) 
+       is extremely expensive on iOS GPU */
+    .shape {
+        display: none;
+    }
+
+    .footer-bg-glow {
+        display: none;
+    }
+
+    /* Remove backdrop-filter on glass panels — 
+       kills Safari iOS memory with multiple elements */
+    .glass-panel {
+        background: rgba(11, 28, 62, 0.85);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    /* Remove hover transform on glass panels — 
+       Safari can mis-trigger on touch */
+    .glass-panel:hover {
+        transform: none;
+    }
+
+    /* Remove will-change from reveal elements —
+       Safari allocates GPU layers aggressively */
+    .reveal {
+        will-change: auto;
+    }
+
+    /* Navbar backdrop-filter */
+    .navbar {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(3, 10, 28, 0.97);
+    }
+
+    /* Remove perspective transform on phone mockup */
+    .phone-mockup {
+        transform: none;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+}
