@@ -1327,6 +1327,19 @@ h1, h2, h3, h4, h5, h6 {
    ===================================================== */
 @media screen and (max-width: 768px) {
 
+    /* CRITICAL FIX: Scroll reveal animations don't fire
+       on Safari iOS — IntersectionObserver is unreliable.
+       Force all reveal elements to be visible immediately. */
+    .reveal,
+    .reveal.reveal-bottom,
+    .reveal.reveal-left,
+    .reveal.reveal-right,
+    .reveal.reveal-scale {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
     /* Remove background blur shapes — filter:blur(100px) 
        is extremely expensive on iOS GPU */
     .shape {
