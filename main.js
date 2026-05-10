@@ -73,7 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Show corresponding content
             const targetId = btn.getAttribute('data-target');
-            document.getElementById(targetId).classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            targetContent.classList.add('active');
+            
+            // Manually trigger reveal for elements inside the new tab
+            targetContent.querySelectorAll('.reveal').forEach(el => {
+                el.classList.add('active');
+            });
         });
     });
 
@@ -112,5 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     revealElements.forEach(el => revealObserver.observe(el));
+
+    // Safety Backup: If everything is still hidden after 3 seconds, force show
+    setTimeout(() => {
+        revealElements.forEach(el => {
+            if (!el.classList.contains('active')) {
+                el.classList.add('active');
+            }
+        });
+    }, 3000);
 
 });
