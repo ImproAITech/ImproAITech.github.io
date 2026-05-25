@@ -835,7 +835,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media screen and (max-width: 768px) {
-    /* ── Navbar ──────────────────────────────── */
     .nav-toggle {
         display: flex;
     }
@@ -867,530 +866,53 @@ h1, h2, h3, h4, h5, h6 {
     .nav-links a {
         font-size: 1.5rem;
     }
-
-    /* ── Layout & Sections ───────────────────── */
-    .content-section {
-        padding: 55px 0;
-    }
-
-    .p-top {
-        margin-top: 2.5rem;
-    }
-
-    /* ── Typography ─────────────────────────── */
-    .hero-title {
-        font-size: 2rem;
-    }
-
-    .section-title {
-        font-size: 1.75rem;
-        margin-bottom: 0.75rem;
-    }
-
-    .section-subtitle {
-        font-size: 1rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1rem;
-        margin: 0 auto 24px;
-    }
-
-    /* ── Grids ───────────────────────────────── */
+    
     .grid-3, .grid-2 {
         grid-template-columns: 1fr;
-        gap: 16px;
     }
-
-    /* Sector agent cards: 2-column marketplace grid */
-    .list-cards {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 14px;
+    
+    .hero-title {
+        font-size: 2.22rem;
     }
-
-    /* Single-card tabs stay full-width */
-    .grid-center-single {
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .footer-bottom {
         flex-direction: column;
-        align-items: stretch;
-    }
-
-    .grid-center-single .agent-card {
-        max-width: 100%;
-    }
-
-    /* ── Cards (general) ─────────────────────── */
-    .card {
-        padding: 20px 16px;
-    }
-
-    .problem-card {
-        padding: 22px 18px;
-    }
-
-    .problem-card h3 {
-        font-size: 1.1rem;
-        margin-bottom: 10px;
-    }
-
-    .icon-bulb {
-        font-size: 1.8rem;
-        margin-bottom: 12px;
-    }
-
-    .feature-item {
-        padding: 0 10px;
-    }
-
-    .feature-icon {
-        font-size: 2.2rem;
-        margin-bottom: 10px;
-    }
-
-    .feature-item h4 {
-        font-size: 1.05rem;
-    }
-
-    /* ── Agent Cards (sector list) ───────────── */
-    .list-cards .agent-card {
-        padding: 14px 12px;
-    }
-
-    .list-cards .agent-badge {
-        font-size: 0.63rem;
-        padding: 3px 7px;
-        margin-bottom: 8px;
-    }
-
-    .list-cards .agent-card h4 {
-        font-size: 0.95rem;
-        margin-bottom: 5px;
-    }
-
-    .list-cards .agent-obj {
-        font-size: 0.76rem;
-        margin-bottom: 8px;
-    }
-
-    .list-cards .divider {
-        margin: 10px 0;
-    }
-
-    .list-cards .agent-features {
-        font-size: 0.72rem;
-    }
-
-    .list-cards .agent-features li {
-        margin-bottom: 7px;
-        padding-left: 13px;
-    }
-
-    /* Full-width agent cards (single per sector) */
-    .grid-center-single .agent-card {
-        padding: 20px 18px;
-    }
-
-    .agent-card h4 {
-        font-size: 1.15rem;
-    }
-
-    .agent-obj {
-        font-size: 0.85rem;
-    }
-
-    .agent-features {
-        font-size: 0.82rem;
-    }
-
-    /* ── Why-Us Cards ────────────────────────── */
-    .why-card {
-        padding: 18px 16px;
-    }
-
-    .why-card h4 {
-        font-size: 1.05rem;
-        margin-bottom: 8px;
-    }
-
-    /* ── Sectors Tabs ────────────────────────── */
-    .tabs-container {
-        margin-top: 30px;
+        align-items: center;
+        gap: 20px;
     }
 
     .sector-tabs {
         justify-content: flex-start;
         padding-left: 5%;
         padding-right: 5%;
-        gap: 10px;
-        margin-bottom: 24px;
     }
 
     .tab-btn {
         flex-shrink: 0;
         white-space: nowrap;
-        padding: 9px 16px;
-        font-size: 0.85rem;
-    }
-
-    .sector-header .icon-large {
-        font-size: 2.8rem;
-        margin-bottom: 10px;
-    }
-
-    .sector-header h3 {
-        font-size: 1.3rem;
-    }
-
-    .sector-header p {
-        font-size: 0.88rem;
-    }
-
-    /* ── Badge ───────────────────────────────── */
-    .badge {
-        font-size: 0.75rem;
-        padding: 5px 12px;
-        margin-bottom: 16px;
-    }
-
-    /* ── Buttons ─────────────────────────────── */
-    .btn-large {
-        padding: 10px 20px;
-        font-size: 0.88rem;
-    }
-
-    .btn-massive {
-        padding: 11px 24px;
-        font-size: 0.92rem;
-    }
-
-    /* ── Hero section ────────────────────────── */
-    .hero {
-        padding-top: 100px;
-    }
-
-    /* ── Desarrollo Web packages grid ───────── */
-    #desarrollo-web .grid-3 {
-        gap: 14px;
-    }
-
-    #desarrollo-web .agent-card {
-        padding: 18px 16px;
-    }
-
-    #desarrollo-web .agent-badge {
-        font-size: 0.65rem;
-    }
-
-    #desarrollo-web .agent-card h4 {
-        font-size: 1rem;
-    }
-
-    #desarrollo-web .agent-obj {
-        font-size: 0.82rem;
-    }
-
-    #desarrollo-web .agent-features {
-        font-size: 0.8rem;
-    }
-
-    /* ── FAQ ─────────────────────────────────── */
-    .faq-question {
-        font-size: 0.95rem;
-        padding: 16px;
-    }
-
-    .faq-item.active .faq-answer {
-        padding: 0 16px 16px;
-    }
-
-    .faq-answer p {
-        font-size: 0.85rem;
-    }
-
-    /* ── Footer ──────────────────────────────── */
-    .footer {
-        padding: 70px 0 30px;
-    }
-
-    .footer-title {
-        font-size: 2rem;
-        margin-bottom: 14px;
-    }
-
-    .footer-subtitle {
-        font-size: 1rem;
-        margin-bottom: 28px;
-    }
-
-    .footer-bottom {
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-        margin-top: 50px;
-        padding-top: 28px;
-    }
-
-    .footer-links {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 14px;
-    }
-
-    .copyright {
-        font-size: 0.72rem;
-        margin-top: 20px;
     }
 }
 
 @media screen and (max-width: 480px) {
-    /* ── Typography (extra small) ────────────── */
     .hero-title {
-        font-size: 1.7rem;
-        letter-spacing: -0.5px;
+        font-size: 1.8rem;
     }
 
     .section-title {
-        font-size: 1.45rem;
+        font-size: 1.6rem;
     }
 
-    .section-subtitle {
-        font-size: 0.9rem;
-    }
-
-    /* ── Sections ────────────────────────────── */
     .content-section {
-        padding: 45px 0;
+        padding: 60px 0;
     }
 
-    .p-top {
-        margin-top: 2rem;
-    }
-
-    /* ── Hero phone mockup ───────────────────── */
     .phone-mockup {
         width: 100%;
-        max-width: 200px;
-        height: 420px;
-    }
-
-    /* ── Grids even tighter ──────────────────── */
-    .grid-3, .grid-2 {
-        gap: 12px;
-    }
-
-    /* ── List cards (sector agents) ─────────── */
-    .list-cards {
-        gap: 10px;
-    }
-
-    .list-cards .agent-card {
-        padding: 11px 9px;
-    }
-
-    .list-cards .agent-badge {
-        font-size: 0.58rem;
-        padding: 2px 6px;
-    }
-
-    .list-cards .agent-card h4 {
-        font-size: 0.85rem;
-    }
-
-    .list-cards .agent-obj {
-        font-size: 0.7rem;
-    }
-
-    .list-cards .agent-features {
-        font-size: 0.67rem;
-    }
-
-    .list-cards .agent-features li {
-        padding-left: 11px;
-        margin-bottom: 5px;
-    }
-
-    /* ── General cards ───────────────────────── */
-    .card, .problem-card {
-        padding: 16px 14px;
-    }
-
-    .why-card {
-        padding: 14px 12px;
-    }
-
-    /* ── Buttons ─────────────────────────────── */
-    .btn-large {
-        padding: 9px 18px;
-        font-size: 0.83rem;
-    }
-
-    .btn-massive {
-        padding: 10px 20px;
-        font-size: 0.86rem;
-    }
-
-    /* ── Footer ──────────────────────────────── */
-    .footer {
-        padding: 55px 0 24px;
-    }
-
-    .footer-title {
-        font-size: 1.7rem;
-    }
-
-    .footer-subtitle {
-        font-size: 0.9rem;
-    }
-
-    /* ── FAQ ─────────────────────────────────── */
-    .faq-question {
-        font-size: 0.88rem;
-        padding: 14px;
-    }
-
-    .faq-answer p {
-        font-size: 0.8rem;
-    }
-
-    /* ── Tabs ────────────────────────────────── */
-    .tab-btn {
-        padding: 7px 13px;
-        font-size: 0.78rem;
-    }
-
-    .sector-header .icon-large {
-        font-size: 2.2rem;
-    }
-
-    .sector-header h3 {
-        font-size: 1.1rem;
-    }
-
-    .sector-header p {
-        font-size: 0.8rem;
-    }
-}
-
-/* Hub Portal Styles */
-.hub-header {
-    position: relative;
-    overflow: hidden;
-}
-
-.hub-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-    margin-top: 50px;
-    max-width: 900px;
-    margin-inline: auto;
-}
-
-@media screen and (max-width: 768px) {
-    .hub-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.hub-card {
-    display: block;
-    text-decoration: none;
-    color: var(--color-text);
-    padding: 50px 40px;
-    text-align: center;
-    transition: var(--transition-medium);
-}
-
-.hub-card h3 {
-    margin-bottom: 15px;
-    font-size: 1.8rem;
-    color: var(--color-white);
-}
-
-.hub-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--color-primary);
-    box-shadow: 0 15px 40px rgba(0, 210, 255, 0.2);
-    color: var(--color-white);
-}
-
-.hub-icon {
-    font-size: 4.5rem;
-    margin-bottom: 25px;
-    display: inline-block;
-}
-
-.pricing-premium {
-    border-color: rgba(0, 210, 255, 0.6) !important;
-    box-shadow: 0 0 30px rgba(0, 210, 255, 0.15) inset !important;
-    transform: scale(1.05);
-}
-
-@media screen and (max-width: 992px) {
-    .pricing-premium {
-        transform: scale(1);
-    }
-}
-
-/* =====================================================
-   SAFARI iOS FIX: Disable heavy GPU effects on mobile
-   backdrop-filter, blur() and will-change cause Safari
-   to fail rendering or require multiple reloads.
-   ===================================================== */
-@media screen and (max-width: 768px) {
-
-    /* CRITICAL FIX: Scroll reveal animations don't fire
-       on Safari iOS — IntersectionObserver is unreliable.
-       Force all reveal elements to be visible immediately. */
-    .reveal,
-    .reveal.reveal-bottom,
-    .reveal.reveal-left,
-    .reveal.reveal-right,
-    .reveal.reveal-scale {
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
-    }
-
-    /* Remove background blur shapes — filter:blur(100px) 
-       is extremely expensive on iOS GPU */
-    .shape {
-        display: none;
-    }
-
-    .footer-bg-glow {
-        display: none;
-    }
-
-    /* Remove backdrop-filter on glass panels — 
-       kills Safari iOS memory with multiple elements */
-    .glass-panel {
-        background: rgba(11, 28, 62, 0.85);
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-    }
-
-    /* Remove hover transform on glass panels — 
-       Safari can mis-trigger on touch */
-    .glass-panel:hover {
-        transform: none;
-    }
-
-    /* Remove will-change from reveal elements —
-       Safari allocates GPU layers aggressively */
-    .reveal {
-        will-change: auto;
-    }
-
-    /* Navbar backdrop-filter */
-    .navbar {
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        background: rgba(3, 10, 28, 0.97);
-    }
-
-    /* Remove perspective transform on phone mockup */
-    .phone-mockup {
-        transform: none;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        max-width: 220px;
+        height: 480px;
     }
 }
