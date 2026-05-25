@@ -479,6 +479,9 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 40px;
     padding-bottom: 10px;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    position: relative;
+    z-index: 5;
 }
 
 .sector-tabs::-webkit-scrollbar {
@@ -505,6 +508,10 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
     cursor: pointer;
     transition: var(--transition-fast);
+    flex-shrink: 0;
+    white-space: nowrap;
+    position: relative;
+    z-index: 6;
 }
 
 .tab-btn:hover {
@@ -847,10 +854,14 @@ h1, h2, h3, h4, h5, h6 {
         transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1000;
         box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        visibility: hidden;
+        pointer-events: none;
     }
 
     .nav-links.active {
         right: 0;
+        visibility: visible;
+        pointer-events: auto;
     }
 
     .nav-links a {
