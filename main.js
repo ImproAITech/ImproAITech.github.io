@@ -1,21 +1,22 @@
-document.addEventListener('DOMContentLoaded', () => {
-    
+const init = () => {
     // Navbar Scroll Effect
     const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
 
     // Mobile Menu Toggle
     const navToggle = document.getElementById('nav-toggle');
     const navLinksContainer = document.getElementById('nav-links');
     const navLinks = document.querySelectorAll('.nav-links a');
 
-    if (navToggle) {
+    if (navToggle && navLinksContainer) {
         navToggle.addEventListener('click', () => {
             navToggle.classList.toggle('active');
             navLinksContainer.classList.toggle('active');
@@ -26,34 +27,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Close mobile menu when a link is clicked
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (navLinksContainer.classList.contains('active')) {
-                navToggle.classList.remove('active');
-                navLinksContainer.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+    if (navLinksContainer && navToggle) {
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinksContainer.classList.contains('active')) {
+                    navToggle.classList.remove('active');
+                    navLinksContainer.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
         });
-    });
+    }
 
     // Smooth Scrolling for Anchor Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
-            if(targetId === '#') return;
+            if (targetId === '#') return;
             
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                // Offset for fixed header
-                const headerOffset = 80;
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-  
-                window.scrollTo({
-                     top: offsetPosition,
-                     behavior: "smooth"
-                });
+            try {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Offset for fixed header
+                    const headerOffset = 80;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+                    window.scrollTo({
+                         top: offsetPosition,
+                         behavior: "smooth"
+                    });
+                }
+            } catch (err) {
+                console.error("Invalid selector:", targetId, err);
             }
         });
     });
@@ -74,12 +81,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show corresponding content
             const targetId = btn.getAttribute('data-target');
             const targetContent = document.getElementById(targetId);
-            targetContent.classList.add('active');
-            
-            // Manually trigger reveal for elements inside the new tab
-            targetContent.querySelectorAll('.reveal').forEach(el => {
-                el.classList.add('active');
-            });
+            if (targetContent) {
+                targetContent.classList.add('active');
+                
+                // Manually trigger reveal for elements inside the new tab
+                targetContent.querySelectorAll('.reveal').forEach(el => {
+                    el.classList.add('active');
+                });
+            }
         });
     });
 
@@ -88,36 +97,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     faqItems.forEach(item => {
         const questionBtn = item.querySelector('.faq-question');
-        questionBtn.addEventListener('click', () => {
-            // Close other open items
-            faqItems.forEach(otherItem => {
-                if (otherItem !== item && otherItem.classList.contains('active')) {
-                    otherItem.classList.remove('active');
-                }
-            });
+        if (questionBtn) {
+            questionBtn.addEventListener('click', () => {
+                // Close other open items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
 
-            // Toggle current item
-            item.classList.toggle('active');
-        });
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        }
     });
 
     // Scroll Reveal Logic (Intersection Observer)
     const revealElements = document.querySelectorAll('.reveal');
     
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                // One-time revelation
-                revealObserver.unobserve(entry.target);
-            }
+    if (typeof IntersectionObserver !== 'undefined') {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // One-time revelation
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
         });
-    }, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
-    });
 
-    revealElements.forEach(el => revealObserver.observe(el));
+        revealElements.forEach(el => revealObserver.observe(el));
+    } else {
+        // Fallback for browsers without IntersectionObserver
+        revealElements.forEach(el => el.classList.add('active'));
+    }
 
     // Safety Backup: If everything is still hidden after 3 seconds, force show
     setTimeout(() => {
@@ -127,5 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, 3000);
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
 
 });
